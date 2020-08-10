@@ -13,19 +13,31 @@ class Maze extends React.Component {
             [0,1,2,3,4,5],
             [0,1,2,3,4,5]
         ];
+        this.arrayBackGroundColor = [
+            [0,1,2,3,4,5],
+            [0,1,2,3,4,5],
+            [0,1,2,3,4,5],
+            [0,1,2,3,4,5],
+            [0,1,2,3,4,5],
+            [0,1,2,3,4,5]            
+        ];
         this.state = {
             array: this.array,
+            arrayBackGroundColor: this.arrayBackGroundColor,
             mazeItemValue: ''
         };
         this.store = {};
         this.parentNode = null;
         this.stack = [];
+        // alert('constructor');
     }
 
     initialize() {
+        // alert('initialize')
         for (let row = 0; row < this.array.length; row++) {
             for (let col = 0; col < this.array.length; col++) {
                 this.array[row][col] = '';
+                this.arrayBackGroundColor[row][col] = '';
             }
         }
         return;
@@ -113,14 +125,13 @@ class Maze extends React.Component {
     }
 
     solve(node) {
-        //keep going up if not wall and upNode is not null\
         node.isVisited = true;
         this.stack.push(node.id);
         if (node.value === "e") {
             console.log("goal has been reached");
             return;
         }
-        if (node.value === "x") {
+        if (node.value === "w") {
             this.stack.pop();
             return;
         }
@@ -141,7 +152,6 @@ class Maze extends React.Component {
         if (node.leftNode !== null  && !node.leftNode.isVisited) {
             this.solve(node.leftNode);
         }
-        debugger;
     }
 
     getNode(key, i, j) {
@@ -158,28 +168,51 @@ class Maze extends React.Component {
 
     componentDidMount() {
         this.initialize();
-        this.createNodes();
         this.setState({array: this.array});
     }
     
-    buttonClick = (row, col) => {
+    onButtonClick = (row, col) => {
+        // alert(`row: ${row}, col: ${col}`)
         this.array[row][col] = (this.props.mazeItemValue === '') ? 's' : this.props.mazeItemValue;
         this.setState({array: this.array});
         this.props.onMazeItemCallback(this.array[row][col]);
     }
 
+    onSolveClick = () => {
+        this.createNodes();
+        this.solve(this.parentNode);
+        this.markNodesWithColor(this.stack);
+        debugger;
+    }
+
+    markNodesWithColor = (stack) => {
+        debugger;
+        let color = '';
+        for (let item of stack) {
+            let tokens = item.split("-");
+            this.arrayBackGroundColor[tokens[0]][tokens[1]] = 'green';
+        }
+        this.setState({arrayBackGroundColor: this.arrayBackGroundColor});
+    }
+
     render() {
-        
         return (
             <div className="d-flex justify-content-center mb-12">
                 {this.state.array.map((rowItem, rowIndex) => {
                     let columns = rowItem.map((colItem, colIndex) => {
                         return <button key={uuidv4()}  
-                            style={{width: '50px', height: '50px'}} 
-                            onClick={() => this.buttonClick(rowIndex, colIndex)}>{this.state.array[rowIndex][colIndex]}</button>;
+                                        style={{
+                                            width: '100px', 
+                                            height: '50px', 
+                                            backgroundColor: this.state.arrayBackGroundColor[rowIndex][colIndex]
+                                        }} 
+                                        onClick={() => this.onButtonClick(rowIndex, colIndex)}>
+                                {/* <span style={{fontSize: '8px'}}>${rowIndex}-${colIndex}</span> */}
+                                {this.state.array[rowIndex][colIndex]}</button>;
                     });
                     return <div key={uuidv4()} className="d-flex flex-column bd-highlight mb-3">{columns}</div>
                 })}
+                <button type="button" className="btn btn-primary" onClick={this.onSolveClick}>Solve</button>
             </div>
         )
     }

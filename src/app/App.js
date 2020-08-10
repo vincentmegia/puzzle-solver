@@ -48,6 +48,7 @@ class App extends React.Component {
             case 'e':
                 this.end = true;
                 this.setState({
+                    maxItemValue: 'w',
                     isStartButtonEnabled: false,
                     isEndButtonEnabled: false,
                     isWallButtonEnabled: true,
@@ -57,7 +58,7 @@ class App extends React.Component {
                 this.setState({maxItemValue: 'w'});
                 break;
             case 'o':
-                this.setState({maxItemValue: 'o'});
+                this.setState({maxItemValue: ''});
                 break;
             default:
                 break;
