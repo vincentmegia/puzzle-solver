@@ -1,6 +1,8 @@
 import React from 'react';
-import MazeNode from './MazeNode';
 import { v4 as uuidv4 } from 'uuid';
+import { withRouter } from 'react-router-dom'
+import NodeBuilder from './NodeBuilder';
+import MazeSolver from './MazeSolver';
 
 class Maze extends React.Component {
     constructor(props) {
@@ -26,14 +28,13 @@ class Maze extends React.Component {
             arrayBackGroundColor: this.arrayBackGroundColor,
             mazeItemValue: ''
         };
-        this.store = {};
-        this.parentNode = null;
-        this.stack = [];
-        // alert('constructor');
+        
+        this.nodeBuilder = new NodeBuilder(this.array);
+        this.mazeSolver = new MazeSolver(this.arrayBackGroundColor);
     }
 
     initialize() {
-        // alert('initialize')
+        debugger;
         for (let row = 0; row < this.array.length; row++) {
             for (let col = 0; col < this.array.length; col++) {
                 this.array[row][col] = '';
@@ -84,83 +85,6 @@ class Maze extends React.Component {
         // this.array[5][5] = "e";
     }
 
-    /**
-     * create nodes out of
-     */
-    createNodes() {
-        const length = this.array.length;
-        this.parentNode = new MazeNode("0-0", this.array[0][0]);
-        this.store["0-0"] = this.parentNode;
-        let node = this.parentNode;
-        for (let i = 0; i <= length - 1; i++) {
-            for (let j = 0; j <= length - 1; j++) {
-                const upKey = `${i + 1}-${j}`;
-                const downKey = `${i - 1}-${j}`;
-                const rightKey = `${i}-${j + 1}`;
-                const leftKey = `${i}-${j - 1}`;
-                node = this.getNode(`${i}-${j}`, i, j);
-
-                if (i > 0) {// set down node
-                    const downNode = this.getNode(downKey, i - 1, j)
-                    node.setDownNode(downNode);
-                    this.store[downNode] = downNode;
-                }
-                if (j > 0) { //set left node
-                    const leftNode = this.getNode(leftKey, i, j - 1);
-                    node.setLeftNode(leftNode);
-                    this.store[leftKey] = leftNode;
-                }
-                if (j + 1 < length) {//set right node
-                    const rightNode = this.getNode(rightKey, i, j + 1);
-                    node.setRightNode(rightNode);
-                    this.store[rightKey] = rightNode;
-                }
-                if (i + 1 < length) {//set up node
-                    const upNode = this.getNode(upKey, i + 1, j)
-                    node.setUpNode(upNode);
-                    this.store[upKey] = upNode;
-                }
-            }
-        }
-    }
-
-    solve(node) {
-        node.isVisited = true;
-        this.stack.push(node.id);
-        if (node.value === "e") {
-            console.log("goal has been reached");
-            return;
-        }
-        if (node.value === "w") {
-            this.stack.pop();
-            return;
-        }
-
-        if (node.upNode === null) return;
-        if (node.upNode !== null && !node.upNode.isVisited) {
-            this.solve(node.upNode);
-        }
-        if (node.rightNode === null) return;
-        if (node.rightNode !== null && !node.rightNode.isVisited) {
-            this.solve(node.rightNode);
-        }
-        if (node.downNode === null) return;
-        if (node.downNode !== null  && !node.downNode.isVisited) {
-            this.solve(node.downNode);
-        }
-        if (node.leftNode === null) return;
-        if (node.leftNode !== null  && !node.leftNode.isVisited) {
-            this.solve(node.leftNode);
-        }
-    }
-
-    getNode(key, i, j) {
-        let node = this.store[key];
-        if (node == null) {
-            node = new MazeNode(key, this.array[i][j]);
-        }
-        return node;
-    }
 
     onMazeItemCallback = (message) => {
         this.props.onMazeItemCallback(this.props.mazeItemValue);
@@ -171,50 +95,61 @@ class Maze extends React.Component {
         this.setState({array: this.array});
     }
     
+    /**
+     * 
+     * @param {*} row 
+     * @param {*} col 
+     */
     onButtonClick = (row, col) => {
-        // alert(`row: ${row}, col: ${col}`)
         this.array[row][col] = (this.props.mazeItemValue === '') ? 's' : this.props.mazeItemValue;
         this.setState({array: this.array});
         this.props.onMazeItemCallback(this.array[row][col]);
     }
 
+    /**
+     * 
+     */
     onSolveClick = () => {
-        this.createNodes();
-        this.solve(this.parentNode);
-        this.markNodesWithColor(this.stack);
+        const node = this.nodeBuilder.build();
+        this.mazeSolver.solve(node);
+        const stack = this.mazeSolver.stack;
+        const arrayBackGroundColor = this.mazeSolver.colorNodes(stack);
         debugger;
+        this.setState({arrayBackGroundColor: arrayBackGroundColor});
     }
-
-    markNodesWithColor = (stack) => {
-        debugger;
-        let color = '';
-        for (let item of stack) {
-            let tokens = item.split("-");
-            this.arrayBackGroundColor[tokens[0]][tokens[1]] = 'green';
-        }
-        this.setState({arrayBackGroundColor: this.arrayBackGroundColor});
+    
+    /**
+     * 
+     */
+    onReset = () => {
+        window.location.reload(false);
     }
 
     render() {
         return (
-            <div className="d-flex justify-content-center mb-12">
-                {this.state.array.map((rowItem, rowIndex) => {
-                    let columns = rowItem.map((colItem, colIndex) => {
-                        return <button key={uuidv4()}  
-                                        style={{
-                                            width: '100px', 
-                                            height: '50px', 
-                                            backgroundColor: this.state.arrayBackGroundColor[rowIndex][colIndex]
-                                        }} 
-                                        onClick={() => this.onButtonClick(rowIndex, colIndex)}>
-                                {/* <span style={{fontSize: '8px'}}>${rowIndex}-${colIndex}</span> */}
-                                {this.state.array[rowIndex][colIndex]}</button>;
-                    });
-                    return <div key={uuidv4()} className="d-flex flex-column bd-highlight mb-3">{columns}</div>
-                })}
-                <button type="button" className="btn btn-primary" onClick={this.onSolveClick}>Solve</button>
+            <div>
+                <div className="d-flex flex-row justify-content-center mb-12">
+                    {this.state.array.map((rowItem, rowIndex) => {
+                        let columns = rowItem.map((colItem, colIndex) => {
+                            return <button key={uuidv4()}  
+                                            style={{
+                                                width: '100px', 
+                                                height: '50px', 
+                                                backgroundColor: this.state.arrayBackGroundColor[rowIndex][colIndex]
+                                            }} 
+                                            onClick={() => this.onButtonClick(rowIndex, colIndex)}>
+                                    {/* <span style={{fontSize: '8px'}}>${rowIndex}-${colIndex}</span> */}
+                                    {this.state.array[rowIndex][colIndex]}</button>;
+                        });
+                        return <div key={uuidv4()} className="d-flex flex-column bd-highlight mb-3">{columns}</div>
+                    })}
+                </div>
+                <div className="d-flex flex-row justify-content-center mb-12">
+                    <button style={{marginRight: '10px'}}  type="button" className="btn btn-primary" onClick={this.onSolveClick}>Solve</button>
+                    <button style={{marginRight: '10px'}}  type="button" className="btn btn-primary" onClick={this.onReset}>Reset</button>
+                </div>
             </div>
         )
     }
 }
-export default Maze;
+export default withRouter(Maze);

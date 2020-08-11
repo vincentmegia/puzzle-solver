@@ -4,8 +4,9 @@ import Header from './header/Header';
 // import PropTypes from 'prop-types';
 // import Footer from './footer/Footer';
 import Maze from './maze/Maze';
-import MazeNode from './maze/MazeNode';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
+
 
 class App extends React.Component {
     constructor(props) {
@@ -69,16 +70,28 @@ class App extends React.Component {
         return (
         <div className="App">
             <Header/>
-            <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div className="btn-group mr-2" role="group" aria-label="First group">
-                    <button type="button" className="btn btn-secondary" disabled={!this.state.isStartButtonEnabled}>Start</button>
-                    <button type="button" className="btn btn-secondary" disabled={!this.state.isEndButtonEnabled}>End</button>
-                    <button type="button" className="btn btn-secondary" onClick={() => this.mazeItemCallback('w')} disabled={!this.state.isWallButtonEnabled}>Wall</button>
-                    <button type="button" className="btn btn-secondary" onClick={() => this.mazeItemCallback('o')} disabled={!this.state.isOpenButtonEnabled}>Open</button>
+            <br/>
+            <div className="d-flex flex-row justify-content-center mb-12">
+                <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div className="btn-group mr-2" role="group" aria-label="First group">
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" disabled={!this.state.isStartButtonEnabled}>Start</button>
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" disabled={!this.state.isEndButtonEnabled}>End</button>
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" onClick={() => this.mazeItemCallback('w')} disabled={!this.state.isWallButtonEnabled}>Wall</button>
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" onClick={() => this.mazeItemCallback('o')} disabled={!this.state.isOpenButtonEnabled}>Open</button>
+                    </div>
                 </div>
+                
             </div>
-            <Maze onMazeItemCallback={this.mazeItemCallback} mazeItemValue={this.state.maxItemValue}/>
+            <br/>
+            
             {/* <Footer/> */}
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/">
+                        <Maze onMazeItemCallback={this.mazeItemCallback} mazeItemValue={this.state.maxItemValue}/>
+                    </Route>
+                </Switch>
+            </BrowserRouter>
         </div>
         );
     }
