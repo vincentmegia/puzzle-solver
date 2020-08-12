@@ -110,7 +110,10 @@ class App extends React.Component {
             {/* <Footer/> */}
             <BrowserRouter basename='http://localhost:3000'>
                 <Switch>
-                    <Route path="/puzzle">
+                    <Route path="/">
+                        <Maze onMazeItemCallback={this.mazeItemCallback} mazeItemValue={this.state.maxItemValue}/>
+                    </Route>
+                    <Route path="/:axisHidden">
                         <Maze onMazeItemCallback={this.mazeItemCallback} mazeItemValue={this.state.maxItemValue}/>
                     </Route>
                 </Switch>

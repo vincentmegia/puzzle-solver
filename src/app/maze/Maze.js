@@ -53,8 +53,8 @@ class Maze extends React.Component {
     componentDidMount() {
         this.initialize();
         this.setState({array: this.array});
-        const values = queryString.parse(this.props.location.search);
-        this.setState({axisHidden: values.debug === undefined});
+        const value = this.props.location.pathname === '/';
+        this.setState({axisHidden: value});
     }
     
     /**
