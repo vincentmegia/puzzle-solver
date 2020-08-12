@@ -113,7 +113,7 @@ class App extends React.Component {
                     <Route path="/">
                         <Maze onMazeItemCallback={this.mazeItemCallback} mazeItemValue={this.state.maxItemValue}/>
                     </Route>
-                    <Route path="/:axisHidden">
+                    <Route path="/debug">
                         <Maze onMazeItemCallback={this.mazeItemCallback} mazeItemValue={this.state.maxItemValue}/>
                     </Route>
                 </Switch>
