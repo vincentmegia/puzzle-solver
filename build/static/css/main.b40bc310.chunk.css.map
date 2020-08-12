@@ -1,0 +1,1 @@
+{"version":3,"sources":["Maze.css"],"names":[],"mappings":"AAAA,qBACI,2BAA6B,CAC7B,sCAAwC,CACxC,2BAA6B,CAC7B,gBACJ","file":"main.b40bc310.chunk.css","sourcesContent":[".btn-primary-outline {\n    margin-right: 10px !important;\n    background-color: transparent !important;\n    border-color: grey !important;\n    box-shadow: inset;\n}"]}

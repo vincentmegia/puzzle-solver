@@ -70,6 +70,29 @@ class App extends React.Component {
         return (
         <div className="App">
             <Header/>
+                <section>
+                    <ul>
+                        <li><div style={{marginBottom: '20px'}}>
+                        I wanted to learn what's the fuzz about ReactJs so this is my test project. It's fairly straighforward framework
+                with a few challenges I've encountered coming from Angular. It has its pros and cons. Am I liking it? every technology
+                has it's usages. I chose <b>Depth First Search and simple heuristic (right, down, left, up) </b> to compliment the algo. 
+                        </div>
+                        </li>
+                        <li>
+                            <b>INSTRUCTIONS:</b>
+                            <ul>
+                                <li>A 6x6 grid can be populated by clicking</li>
+                                <li>First click will mark an "s" which will denote the start of the puzzle</li>
+                                <li>Second click will mark an "e" which will denote the end or goal of the puzzle</li>
+                                <li>Wall button will mark a "w" which will denote a wall or an obstacle</li>
+                                <li>Open button will mark a grid empty or free space</li>
+                                <li>Solve button will initiate the puzzle solving process</li>
+                                <li>Reset button will reset the process</li>
+                            </ul>
+                        </li>
+                    </ul>
+                
+                </section>
             <br/>
             <div className="d-flex flex-row justify-content-center mb-12">
                 <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
