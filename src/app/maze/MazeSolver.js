@@ -10,7 +10,7 @@ class MazeSolver {
      * @param {*} node 
      */
     solve(node) {
-        if (this.isEnd) return;
+        if (this.isEnd || node.isVisited) return;
         node.isVisited = true;
         this.stack.push(node.id);
         if (node.value === "e") {

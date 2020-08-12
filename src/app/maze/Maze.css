@@ -1,0 +1,6 @@
+.btn-primary-outline {
+    margin-right: 10px !important;
+    background-color: transparent !important;
+    border-color: grey !important;
+    box-shadow: inset;
+}

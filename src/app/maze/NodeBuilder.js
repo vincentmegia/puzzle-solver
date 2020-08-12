@@ -5,6 +5,7 @@ class NodeBuilder {
         this.array = array;
         this.parentNode = null;
         this.store = {};
+        this.startKey = '';
     }
 
     /**
@@ -45,7 +46,6 @@ class NodeBuilder {
                 }
             }
         }
-        return this.parentNode;
     }
 
     /**
@@ -60,6 +60,10 @@ class NodeBuilder {
             node = new MazeNode(key, this.array[i][j]);
         }
         return node;
+    }
+
+    getStartNode() {
+        return this.store[this.startKey];
     }
 }
 

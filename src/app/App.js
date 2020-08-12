@@ -74,10 +74,10 @@ class App extends React.Component {
             <div className="d-flex flex-row justify-content-center mb-12">
                 <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div className="btn-group mr-2" role="group" aria-label="First group">
-                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" disabled={!this.state.isStartButtonEnabled}>Start</button>
-                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" disabled={!this.state.isEndButtonEnabled}>End</button>
-                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" onClick={() => this.mazeItemCallback('w')} disabled={!this.state.isWallButtonEnabled}>Wall</button>
-                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary button-spacer" onClick={() => this.mazeItemCallback('o')} disabled={!this.state.isOpenButtonEnabled}>Open</button>
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary-outline button-spacer" disabled={!this.state.isStartButtonEnabled}>Start</button>
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary-outline button-spacer" disabled={!this.state.isEndButtonEnabled}>End</button>
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary-outline button-spacer" onClick={() => this.mazeItemCallback('w')} disabled={!this.state.isWallButtonEnabled}>Wall</button>
+                        <button style={{marginRight: '10px'}} type="button" className="btn btn-primary-outline button-spacer" onClick={() => this.mazeItemCallback('o')} disabled={!this.state.isOpenButtonEnabled}>Open</button>
                     </div>
                 </div>
                 
@@ -85,9 +85,9 @@ class App extends React.Component {
             <br/>
             
             {/* <Footer/> */}
-            <BrowserRouter>
+            <BrowserRouter basename='http://localhost:3000'>
                 <Switch>
-                    <Route path="/">
+                    <Route path="/puzzle">
                         <Maze onMazeItemCallback={this.mazeItemCallback} mazeItemValue={this.state.maxItemValue}/>
                     </Route>
                 </Switch>
