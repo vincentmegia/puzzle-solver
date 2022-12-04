@@ -1,43 +1,74 @@
 {
-  "name": "puzzle-solver",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^4.5.0",
-    "query-string": "^6.13.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
-    "uuid": "^8.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.3",
-    "prop-types": "^15.7.2"
-  }
+   "name": "puzzle-solver",
+   "version": "0.1.0",
+   "private": false,
+   "dependencies": {
+      "bootstrap": "^4.5.0",
+      "global": "^4.4.0",
+      "query-string": "^6.13.1",
+      "react": "^16.13.1",
+      "react-dom": "^16.13.1",
+      "react-router": "^5.2.0",
+      "react-router-dom": "^5.2.0",
+      "react-scripts": "3.4.1",
+      "uuid": "^8.3.0"
+   },
+   "scripts": {
+      "start": "react-scripts start",
+      "lint": "npx eslint src --fix",
+      "build": "react-scripts build",
+      "test": "npx jest",
+      "eject": "react-scripts eject",
+      "prepare": "husky install"
+   },
+   "eslintConfig": {
+      "extends": "react-app"
+   },
+   "browserslist": {
+      "production": [
+         ">0.2%",
+         "not dead",
+         "not op_mini all"
+      ],
+      "development": [
+         "last 1 chrome version",
+         "last 1 firefox version",
+         "last 1 safari version"
+      ]
+   },
+   "devDependencies": {
+      "@babel/core": "^7.20.5",
+      "@babel/eslint-parser": "^7.19.1",
+      "@babel/preset-env": "^7.20.2",
+      "@babel/preset-react": "^7.18.6",
+      "@testing-library/jest-dom": "^4.2.4",
+      "@testing-library/react": "^9.5.0",
+      "@testing-library/user-event": "^7.2.1",
+      "@types/jest": "^26.0.3",
+      "babel-jest": "24.9.0",
+      "babel-preset-jest": "^29.2.0",
+      "eslint": "6.6.0",
+      "eslint-config-standard": "^17.0.0",
+      "eslint-plugin-import": "^2.25.2",
+      "eslint-plugin-n": "^15.0.0",
+      "eslint-plugin-promise": "^6.0.0",
+      "eslint-plugin-react": "^7.31.11",
+      "husky": "^8.0.0",
+      "identity-obj-proxy": "^3.0.0",
+      "jest": "24.9.0",
+      "jest-environment-jsdom": "^24.9.0",
+      "prettier": "^2.8.0",
+      "prop-types": "^15.7.2"
+   },
+   "main": "index.js",
+   "repository": "https://github.com/vincentmegia/puzzle-solver",
+   "author": "Vince Megia <vincent.megia@gmail.com>",
+   "license": "MIT",
+   "jest": {
+      "testEnvironment": "jsdom",
+      "moduleNameMapper": {
+         "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+         "^uuid$": "uuid"
+      }
+   }
 }

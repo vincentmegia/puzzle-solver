@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 // import Template from './footer.jsx';
 
 class Footer extends React.Component {
-    // render = Template;
+   // render = Template;
 }
 
 export default Footer
